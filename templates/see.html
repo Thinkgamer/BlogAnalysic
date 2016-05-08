@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link type="text/css" href="/static/css/see.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    随便看看
+{% endblock %}
+
+{% block head %}
+<div class="head">
+	<div class="h_l">
+		<p style="color: darkgrey; font-size: 18px;">  请随便看看 &nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">登录</a> </p>
+	</div>
+    <div class="h_r" id="nav">
+    	<ul >
+			<li class="h_li"><a href="/login/login" onclick="bian(0)">&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li"><a href="/login/login" onclick="bian(1)">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block container %}
+<hr class="hr">
+<div class="main">
+    <div class="author">
+        <h2 align="center">热门作者列表</h2>
+        <br /><br />
+        {% for author,value in author_list %}
+        <p class="ap" align="center"><a href="http://blog.csdn.net/{{ author }}" target="_blank">{{ author }}</a>&nbsp;&nbsp;指数:{{ value }}</p>
+        {% endfor %}
+    </div>
+    <div class="blog">
+        <h2 align="center">热门博客列表</h2>
+        <br /><br />
+        {% for blog_pv,value in blog_dic %}
+            {% for href,blog_title in value.items %}
+            <div class="bp" align="center"><a href="http://blog.csdn.net/{{ href }}" target="_blank">{{ blog_title }}</a>&nbsp;&nbsp;访问量:{{ blog_pv }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

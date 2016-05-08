@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>{% block title %}{% endblock %}</title>
+</head>
+{% block css %}
+{% endblock %}
+<body>
+{% block head %}
+{% endblock %}
+
+<div align="center"><img  class="title" src="/static/image/title.jpg" height="60" width="600"></div>
+<br /><br />
+
+{% block header %}
+{% endblock %}
+
+{% block container %}
+{% endblock %}
+<script>
+	var As=document.getElementById("nav").getElementsByTagName("a");
+	As[0].style.color="red";
+	function bian(n){
+	   	for(var j=0;j<As.length;j++){
+	   		As[n].style.color="red";
+	   		if(j!=n){
+	  			As[j].style.color="white";
+            }
+        }
+    }
+</script>
+</body>
+</html>

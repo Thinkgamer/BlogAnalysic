@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block  title %}归档统计{% endblock %}
+{% block css %}<link type="text/css" href="/static/css/blog.css" rel="stylesheet">{% endblock %}
+{% block head %}
+<div class="head">
+	<div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+    <div class="h_r" id="nav">
+    	<ul >
+			<li class="h_li1"><a class="h_li1_a" href="/index/user/{{ name }}" onclick="bian(0)" >&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li1"><a class="h_li1_a" href="/blog/blog/{{ name }}" onclick="bian(1)" style="color: red;">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+    </div>
+</div>
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+{% endblock %}
+
+{% block header %}
+<div class="header" id="nav1">
+	<ul >
+		<li class="h_li"><a class="h_a" style="" onclick="bian(0)" href="/blog/blog/{{ name }}">&nbsp;&nbsp;博客概况&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(0)" href="/blog/guidang/{{ name }}" style="border-bottom: 4px solid black;margin-left: 15px;">&nbsp;&nbsp;归档统计&nbsp;</a></li>
+        <li class="h_li"><a class="h_a " onclick="bian(1)" href="/blog/paiming/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;博客排名&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(2)" href="/blog/btuijian/{{ name }}"  style="margin-left: 15px;">&nbsp;&nbsp;为我推荐&nbsp;</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block container %}
+<div class="g_main">
+    <div class="s_t1"><h2>日访问量变化/周</h2></div><br />
+	<div class="s_main" align="center">
+	<canvas id="mycanvas6" class="s_canvas" height="440" width="600"></canvas>
+	</div>
+	<div class="s_t1"><h2>日积分变化/周</h2></div><br />
+	<div class="s_main" align="center">
+    	<canvas id="mycanvas8" class="s_canvas" height="440" width="600"></canvas>
+	</div>
+	<div class="s_t1"><h2>日评论变化/周</h2></div><br />
+	<div class="s_main" align="center">
+    	<canvas id="mycanvas7" class="s_canvas" height="440" width="600"></canvas>
+	</div>
+</div>
+
+	
+	
+
+	<script>
+		for(var k=6;k<=8;k++){
+				var a=document.getElementById('mycanvas'+k);
+				var b=a.getContext('2d');
+				//x轴
+				b.moveTo(30,45);
+				b.lineTo(30, 440);
+				b.moveTo(30,45);
+				b.lineTo(38,60);
+				b.moveTo(30,45);
+				b.lineTo(22,60);
+				b.stroke();
+				//y轴S
+				b.moveTo(0,410);
+				b.lineTo(595,410);
+				b.moveTo(595,410);
+				b.lineTo(580,418);
+				b.moveTo(595,410);
+				b.lineTo(580,402);
+				b.stroke();
+				
+				b.moveTo(105,410);
+				b.lineTo(105,405);
+				b.moveTo(180,410);
+				b.lineTo(180,405);
+				b.moveTo(255,410);
+				b.lineTo(255,405);
+				b.moveTo(330,410);
+				b.lineTo(330,405);
+				b.moveTo(405,410);
+				b.lineTo(405,405);
+				b.moveTo(480,410);
+				b.lineTo(480,405);
+				b.moveTo(555,410);
+				b.lineTo(555,405);
+				b.stroke();
+				b.font="20px Georgia";
+				b.textBaseline="top";
+				b.strokeText("一",95,413);
+				b.strokeText("二",170,413);
+				b.strokeText("三",245,413);
+				b.strokeText("四",320,413);
+				b.strokeText("五",400,413);
+				b.strokeText("六",475,413);
+				b.strokeText("七",545,413);
+	
+								
+				//日访问量
+				if(k==6){
+{#					var h1=0,h2=0,h3=11292,h4=0,h5=0,h6=621,h7=414;#}
+{#					var arr1=[h1,h2,h3,h4,h5,h6,h7];#}
+{#					var arr=[h1,h2,h3,h4,h5,h6,h7];#}
+                    var arr1 = {{ pv_list }}
+                    var arr = {{ pv_list }}
+                    var maxpv = {{ maxpv }}
+					for(var j=0;j<arr1.length;j++){
+						arr1[j]=440-parseInt(arr1[j]/(maxpv/365));
+					}
+					b.moveTo(105,arr1[0]-30);//monday
+					b.lineTo(180,arr1[1]-30);
+					b.moveTo(180,arr1[1]-30);//tuesday
+					b.lineTo(255,arr1[2]-30);
+					b.moveTo(255,arr1[2]-30);//wesday
+					b.lineTo(330,arr1[3]-30);
+					b.moveTo(330,arr1[3]-30);//tuthday
+					b.lineTo(405,arr1[4]-30);
+					b.moveTo(405,arr1[4]-30);//friday
+					b.lineTo(480,arr1[5]-30);
+					b.moveTo(480,arr1[5]-30);//studay
+					b.lineTo(555,arr1[6]-30);//sunday
+					b.stroke();
+					b.font="15px Georgia";
+					b.textBaseline="Middle";
+					b.strokeText(arr[0],105,arr1[0]-50);
+					b.strokeText(arr[1],180,arr1[1]-50);
+					b.strokeText(arr[2],255,arr1[2]-50);
+					b.strokeText(arr[3],330,arr1[3]-50);
+					b.strokeText(arr[4],405,arr1[4]-50);
+					b.strokeText(arr[5],480,arr1[5]-50);
+					b.strokeText(arr[6],555,arr1[6]-50);
+			    }
+                //日评论
+				else if(k==7){
+					var arr1={{ dis_list }};
+					var arr={{ dis_list }};
+                    var maxdis = {{ maxdis }}
+					for(var j=0;j<arr1.length;j++){
+						arr1[j]=440-parseInt(arr1[j]/(maxdis/365));
+					}
+					b.moveTo(105,arr1[0]-30);//monday
+					b.lineTo(180,arr1[1]-30);
+					b.moveTo(180,arr1[1]-30);//tuesday
+					b.lineTo(255,arr1[2]-30);
+					b.moveTo(255,arr1[2]-30);//wesday
+					b.lineTo(330,arr1[3]-30);
+					b.moveTo(330,arr1[3]-30);//tuthday
+					b.lineTo(405,arr1[4]-30);
+					b.moveTo(405,arr1[4]-30);//friday
+					b.lineTo(480,arr1[5]-30);
+					b.moveTo(480,arr1[5]-30);//studay
+					b.lineTo(555,arr1[6]-30);//sunday
+					b.stroke();
+					b.font="15px Georgia";
+					b.textBaseline="Middle";
+					b.strokeText(arr[0],105,arr1[0]-50);
+					b.strokeText(arr[1],180,arr1[1]-50);
+					b.strokeText(arr[2],255,arr1[2]-50);
+					b.strokeText(arr[3],330,arr1[3]-50);
+					b.strokeText(arr[4],405,arr1[4]-50);
+					b.strokeText(arr[5],480,arr1[5]-50);
+					b.strokeText(arr[6],555,arr1[6]-50);
+				}
+				else if(k==8){
+					var arr1={{ jifen_list }};
+					var arr={{ jifen_list }};
+					var maxjifen = {{ maxjifen }}
+                    for(var j=0;j<arr1.length;j++){
+						arr1[j]=440-parseInt(arr1[j]/(maxjifen/365));
+					}
+					b.moveTo(90,410);
+					b.lineTo(90,arr1[0]-30);
+					b.moveTo(90,arr1[0]-30);
+					b.lineTo(115,arr1[0]-30);
+					b.moveTo(115,arr1[0]-30);
+					b.lineTo(115,410);
+					b.stroke();
+					
+					b.moveTo(170,410);
+					b.lineTo(170,arr1[1]-30);
+					b.moveTo(170,arr1[1]-30);
+					b.lineTo(190,arr1[1]-30);
+					b.moveTo(190,arr1[1]-30);
+					b.lineTo(190,410);
+					b.stroke();
+					
+					b.moveTo(245,410);
+					b.lineTo(245,arr1[2]-30);
+					b.moveTo(245,arr1[2]-30);
+					b.lineTo(265,arr1[2]-30);
+					b.moveTo(265,arr1[2]-30);
+					b.lineTo(265,410);
+					b.stroke();
+					
+					b.moveTo(320,410);
+					b.lineTo(320,arr1[3]-30);
+					b.moveTo(320,arr1[3]-30);
+					b.lineTo(340,arr1[3]-30);
+					b.moveTo(340,arr1[3]-30);
+					b.lineTo(340,410);
+					b.stroke();
+					
+					b.moveTo(395,410);
+					b.lineTo(395,arr1[4]-30);
+					b.moveTo(395,arr1[4]-30);
+					b.lineTo(415,arr1[4]-30);
+					b.moveTo(415,arr1[4]-30);
+					b.lineTo(415,410);
+					b.stroke();
+					
+					b.moveTo(470,410);
+					b.lineTo(470,arr1[5]-30);
+					b.moveTo(470,arr1[5]-30);
+					b.lineTo(490,arr1[5]-30);
+					b.moveTo(490,arr1[5]-30);
+					b.lineTo(490,410);
+					b.stroke();
+					
+					b.moveTo(545,410);
+					b.lineTo(545,arr1[6]-30);
+					b.moveTo(545,arr1[6]-30);
+					b.lineTo(565,arr1[6]-30);
+					b.moveTo(565,arr1[6]-30);
+					b.lineTo(565,410);
+					b.stroke();
+					
+					b.font="15px Georgia";
+					b.textBaseline="Middle";
+					b.strokeText(arr[0],90,arr1[0]-50);
+					b.strokeText(arr[1],170,arr1[1]-50);
+					b.strokeText(arr[2],245,arr1[2]-50);
+					b.strokeText(arr[3],320,arr1[3]-50);
+					b.strokeText(arr[4],395,arr1[4]-50);
+					b.strokeText(arr[5],470,arr1[5]-50);
+					b.strokeText(arr[6],545,arr1[6]-50);	
+				}
+	}
+	</script>	
+{% endblock %}

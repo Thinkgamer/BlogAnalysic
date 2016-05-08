@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}博客推荐{% endblock %}
+{% block css %}<link type="text/css" href="/static/css/blog.css" rel="stylesheet">{% endblock %}
+{% block head %}
+<div class="head">
+	<div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+    <div class="h_r" id="nav">
+    	<ul >
+			<li class="h_li1"><a class="h_li1_a" href="/index/user/{{ name }}" onclick="bian(0)" >&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li1"><a class="h_li1_a" href="/blog/blog/{{ name }}" onclick="bian(1)" style="color: red;">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+    </div>
+</div>
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+{% endblock %}
+
+{% block header %}
+<div class="header" id="nav1">
+    <ul >
+        <li class="h_li"><a class="h_a" style="" onclick="bian(0)" href="/blog/blog/{{ name }}">&nbsp;&nbsp;博客概况&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(0)" href="/blog/guidang/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;归档统计&nbsp;</a></li>
+        <li class="h_li"><a class="h_a " onclick="bian(1)" href="/blog/paiming/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;博客排名&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(2)" href="/blog/btuijian/{{ name }}"  style="border-bottom: 4px solid black;margin-left: 15px;">&nbsp;&nbsp;博客推荐&nbsp;</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block container %}
+	<div class=tj_main>
+		<div class="s_t1"><h2>请浏览</h2></div><br />
+		<div align="center" class="tj_c">
+			{% for id,author in free_idauthor.items %}
+            {% for id1,title in free_idtitle.items %}
+                {% if id1 == id  %}
+                <div class="p_1">
+                    <a href="/blog/content/{{ name }}/{{ author }}/{{ id }}">{{ title }}</a>
+                    &nbsp;&nbsp; |&nbsp;&nbsp; Author:
+                    <a href="http://blog.csdn.net/{{ author }}">{{ author }}</a></div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+@charset "utf-8";
+* {
+	vertical-align: middle;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	list-style-type: none;
+	text-decoration: none;
+}
+
+html {
+	height: 100%;
+}
+
+ body {
+	font: normal 14px "微软雅黑";
+	color: #666666;
+	/*background:url(/static/image/bg.jpg);*/
+	background-repeat:no-repeat;
+	background-size:cover;
+	height: 100%;
+	background-color: #333333;
+       }
+
+.clear {
+	zoom: 1;
+}
+
+.clear:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.logo,
+.lrr-sub {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 228px;
+	height: 50px;
+	margin-left: -134px;
+	margin-top: -320px;
+}
+
+.lrr-sub {
+	color: #FFFFFF;
+	margin-top: -270px;
+	margin-left: -50px;
+	font-size: 20px;
+}
+
+.reg-log-main {
+	width: 400px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -200px;
+	border-radius: 5px;
+	background-color: #555555;
+}
+
+.login {
+	height: 350px;
+	margin-top: -210px;
+	filter:alpha(Opacity=80);
+	-moz-opacity:0.2;
+	opacity: 0.8;
+}
+
+.regist {
+	height: 440px;
+	margin-top: -220px;
+}
+
+.retire-password {
+	height: 340px;
+	margin-top: -215px;
+}
+
+.rlm-content {
+	width: 320px;
+	margin: 40px;
+}
+
+.rlm-content>p {
+	color: #b3b2b2;
+	margin-top: 20px;
+}
+
+.rlmcl-content {
+	width: 320px;
+	height: 43px;
+	line-height: 43px;
+	overflow: hidden;
+	border: 1px solid #e7e7e7;
+	margin-bottom: 15px;
+	position: relative;
+	border-radius: 3px;
+}
+
+.rlmcl-content span.placeholder {
+	position: absolute;
+	left: 12px;
+	top: 0;
+	color: #7f7e7e;
+	z-index: 1;
+}
+
+.rlmcl-content input {
+	color: #FFFFFF;
+	background: none;
+	font-size: 20px;
+	position: relative;
+	z-index: 2;
+	padding-left: 15px;
+	width: 305px;
+}
+
+.btn {
+	width: 320px;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	font-size: 16px;
+	color: #FFFFFF;
+	background: #1f7edd;
+	border-radius: 3px;
+	margin-top: 20px;
+}
+
+.btn:hover {
+	background-color: #FF8500;
+	cursor: pointer;
+}
+
+.log-reset {
+	width: 320px;
+	height: 80px;
+	position: relative;
+}
+
+.hmc-copyright {
+	color: #FFFFFF;
+	position: absolute;
+	bottom: 60px;
+	width: 600px;
+	text-align: center;
+	left: 50%;
+	margin-left: -300px;
+}

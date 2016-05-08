@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description " content="" />
+    <meta name="keywords" content="" />
+    <title>欢迎使用博客统计分析系统</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/login.css" />
+</head>
+<body>
+    <script language="JavaScript">
+        {% if error %}
+            alert("{{ error }}");
+            window.location.href="/login/antion";
+        {% endif %}
+    </script>
+    <a class="logo" href="/"><img src="/static/image/login.png" /></a>
+    <p class="lrr-sub">   &nbsp;&nbsp;&nbsp;CyanScikit</p>
+    <div class="reg-log-main login">
+        <div class="rlm-content">
+            <form action="" method="post">
+                <div class="rlmcl-content phone">
+                    <input type="text" name="account"  id="user" placeholder="用户名" />
+                </div>
+                <div class="rlmcl-content pwd">
+                    <input type="password" name="password"  id="pwd" placeholder="密码" />
+                </div>
+                <div class="log-reset">
+                    <button class="btn" id="enterlogin">登　录</button>
+                    <button class="btn"><a href="/see/see" style="color:white;">随便看看</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="hmc-copyright"> Copyright 2014-2015  |  版本1.0 |  Made By CyanScikit </div>
+</body>
+</html>

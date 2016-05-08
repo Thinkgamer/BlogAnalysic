@@ -1,0 +1,59 @@
+{% extends "btj.html" %}
+{% block title %}博客推荐{% endblock %}
+{% block css %}<link type="text/css" href="/static/css/blog.css" rel="stylesheet">{% endblock %}
+{% block head %}
+<div class="head">
+	<div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+    <div class="h_r" id="nav">
+    	<ul >
+			<li class="h_li1"><a class="h_li1_a" href="/index/user/{{ name }}" onclick="bian(0)" >&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li1"><a class="h_li1_a" href="/blog/blog/{{ name }}" onclick="bian(1)" style="color: red;">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+    </div>
+</div>
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+{% endblock %}
+
+{% block header %}
+<div class="header" id="nav1">
+    <ul >
+        <li class="h_li"><a class="h_a" style="" onclick="bian(0)" href="/blog/blog/{{ name }}">&nbsp;&nbsp;博客概况&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(0)" href="/blog/guidang/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;归档统计&nbsp;</a></li>
+        <li class="h_li"><a class="h_a " onclick="bian(1)" href="/blog/paiming/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;博客排名&nbsp;</a></li>
+        <li class="h_li"><a class="h_a" onclick="bian(2)" href="/blog/btuijian/{{ name }}"  style="border-bottom: 4px solid black;margin-left: 15px;">&nbsp;&nbsp;博客推荐&nbsp;</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block container %}
+	<div class="tj_main" style="height:1000px">
+		<div class="s_t1" style="width: 600px"><h2>{{ title }}</h2></div><br />
+{#        <h4>请为本博客打分：</h4>#}
+{#        <form action="" method="post">#}
+{#            <input type="text" id="score" name="score" style="width: 40%;height: 25px;">#}
+{#            <button type="submit"style="height: 28px;">提交</button>#}
+{#        </form>#}
+        <br /><h3>注明：内容为当即爬取，需要连接网络，且仅供演示，切勿追求样式</h3><br />
+		<div style="float:left ;width: 70%;">
+        <p >{{ content }}</p>
+		</div>
+        <div style="float:right ;width: 28%;overflow: hidden;">
+            <div class="s_t1" style="width: 200px"><h2>猜你喜欢</h2></div><br />
+            {% if len %}
+                {% for blog in tjblog_list %}
+                <div class="p_1"><a href="">{{ blog }}</a></div>
+                {% endfor %}
+            {% else %}
+                <div class="p_1">由于博客样本数量有限，暂时没有为你推荐相似的文章</div>
+            {% endif %}
+		</div>
+	</div>
+    <br />
+    <br />
+{% endblock %}

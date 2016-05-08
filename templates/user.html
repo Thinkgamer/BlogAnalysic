@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}
+用户统计分析
+{% endblock %}
+
+{% block css %}
+<link type="text/css" href="/static/css/user.css" rel="stylesheet">
+<link type="text/css" href="/static/css/base.css" rel="stylesheet">
+{% endblock %}
+
+{% block head %}
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+
+<div class="head">
+    <div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+
+    <div class="h_r" id="nav">
+	   	<ul>
+			<li class="h_li"><a href="/index/user/{{ name }}" onclick="bian(0)">&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li"><a href="/blog/blog/{{ name }}" onclick="bian(1)">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block header  %}
+<div class="header" id="nav">
+	<ul >
+        <li class="h_li">
+            <a class="h_a 3" onclick="bian(0)" style="border-bottom: 5px solid #000000;">&nbsp;&nbsp;互动分析&nbsp;</a>
+        </li>
+		<li class="h_li">
+            <a class="h_a 2" onclick="bian(1)" href="/index/focus/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;关注分析&nbsp;</a>
+        </li>
+		<li class="h_li">
+            <a class="h_a 1" onclick="bian(2)" href="/index/fans/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;粉丝分析&nbsp;</a>
+        </li>
+        <li class="h_li">
+            <a class="h_a 4" onclick="bian(3)" href="/index/tuijian/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;用户推荐&nbsp;</a>
+        </li>&nbsp;
+    </ul>
+</div>
+<br />
+{% endblock %}
+
+{% block container %}
+<div class="con">
+    <div class="goto">
+		<div class="g_l">
+			<div class="s_t1"><h2>最近互动比例</h2></div>
+            <br /><br /><br />
+        	<div class="gt" align="center">
+                <canvas id="mycan" class="gt_my" height="50px" width="760px"></canvas><br />
+                <span style="color: blue; float: left; margin-left: 110px;">我的粉丝</span>
+                <span style="color:palegreen ;">相互关注</span>
+                <span style="color: red; float: right; margin-right: 110px;">我的关注</span>
+                <br /><br /><br />
+                <p class="pp">粉丝总数<br>{{ fansnum }}</p>
+                <p class="pp">互动总数<br>{{ hudongnum }}</p>
+                <p class="pp" >关注总数<br>{{ focusnum }}</p>
+            </div>
+
+            <div class="s_t1" ><h2>日互动人数/周</h2></div>
+            <br />
+            <div class="s_main" align="center">
+                <canvas id="mycanvas5" class="s_canvas" height="440" width="600"></canvas>
+            </div>
+            <br />
+        </div>
+
+		<div class="ce" style="float: left;"></div>
+			<div class="g_r">
+			    <div>
+                    <h2>互动名单</h2>
+                </div><br />
+                {% if hdname_list %}
+                {% for name in hdname_list %}
+		        <div class="g_r_1"><a href="http://blog.csdn.net/{{ name }}" class="center">{{ name }}</a></div>
+                {% endfor %}
+                {% elif not hudongnum %}
+                    <div class="g_r_1">你还没有互动关注的人</div>
+                {% endif %}
+
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+var a=document.getElementById('mycanvas5');
+if(a){
+	var b=a.getContext('2d');
+				//x轴
+				b.moveTo(30,45);
+				b.lineTo(30, 440);
+				b.moveTo(30,45);
+				b.lineTo(38,60);
+				b.moveTo(30,45);
+				b.lineTo(22,60);
+				b.stroke();
+				//y轴S
+				b.moveTo(0,410);
+				b.lineTo(595,410);
+				b.moveTo(595,410);
+				b.lineTo(580,418);
+				b.moveTo(595,410);
+				b.lineTo(580,402);
+				b.stroke();
+
+				b.moveTo(105,410);
+				b.lineTo(105,405);
+				b.moveTo(180,410);
+				b.lineTo(180,405);
+				b.moveTo(255,410);
+				b.lineTo(255,405);
+				b.moveTo(330,410);
+				b.lineTo(330,405);
+				b.moveTo(405,410);
+				b.lineTo(405,405);
+				b.moveTo(480,410);
+				b.lineTo(480,405);
+				b.moveTo(555,410);
+				b.lineTo(555,405);
+				b.stroke();
+				b.font="20px Georgia";
+				b.textBaseline="top";
+				b.strokeText("Mon.",80,413);
+				b.strokeText("Tues.",155,413);
+				b.strokeText("Wed.",230,413);
+				b.strokeText("Thur.",305,413);
+				b.strokeText("Fri.",385,413);
+				b.strokeText("Sat.",460,413);
+				b.strokeText("Sun.",530,413);
+
+}
+
+//数据
+var arr1 = {{ hd_new_add_list }};
+var arr = {{ hd_new_add_list }};
+var max = {{ maxnum }};
+for(var j=0;j<arr1.length;j++){
+	arr1[j]=440-parseInt( arr1[j]/ (max/365));
+}
+b.moveTo(105,arr1[0]-30);//monday
+b.lineTo(180,arr1[1]-30);
+b.moveTo(180,arr1[1]-30);//tuesday
+b.lineTo(255,arr1[2]-30);
+b.moveTo(255,arr1[2]-30);//wesday
+b.lineTo(330,arr1[3]-30);
+b.moveTo(330,arr1[3]-30);//tuthday
+b.lineTo(405,arr1[4]-30);
+b.moveTo(405,arr1[4]-30);//friday
+b.lineTo(480,arr1[5]-30);
+b.moveTo(480,arr1[5]-30);//studay
+b.lineTo(555,arr1[6]-30);//sunday
+b.stroke();
+b.font="15px Georgia";
+b.textBaseline="Middle";
+b.strokeText(arr[0],105,arr1[0]-50);
+b.strokeText(arr[1],180,arr1[1]-50);
+b.strokeText(arr[2],255,arr1[2]-50);
+b.strokeText(arr[3],330,arr1[3]-50);
+b.strokeText(arr[4],405,arr1[4]-50);
+b.strokeText(arr[5],480,arr1[5]-50);
+b.strokeText(arr[6],555,arr1[6]-50);
+
+
+{#比例图#}
+var gt=document.getElementById("mycan");
+var gt1=gt.getContext("2d");
+gt1.lineWidth=5;
+{#var x1=397,x2=80,x3=546;#}
+var x1={{ fansnum }},x2={{ hudongnum }},x3={{ focusnum }};
+var arrt=[x1,x2,x3];
+var tol=arrt[0]+arrt[1]+arrt[2];
+arrt[0]=(arrt[0]/(tol/760));
+arrt[2]=760-(arrt[2]/(tol/750));
+
+gt1.moveTo(arrt[0],50);
+gt1.lineTo(arrt[0],0);
+gt1.moveTo(arrt[2],50);
+gt1.lineTo(arrt[2],0);
+gt1.stroke();
+var grd=gt1.createLinearGradient(0,0,arrt[0],0);
+grd.addColorStop(0,"blue");
+grd.addColorStop(1,"white");
+gt1.fillStyle=grd;
+gt1.fillRect(0,0,arrt[0],50);
+var grd2=gt1.createLinearGradient(arrt[2],0,760,0);
+grd2.addColorStop(0,"white");
+grd2.addColorStop(1,"red");
+gt1.fillStyle=grd2;
+gt1.fillRect(arrt[2],0,760,50);
+
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link type="text/css" href="/static/css/see.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    随便看看
+{% endblock %}
+
+{% block head %}
+<div class="head">
+	<div class="h_l">
+		<p style="color: darkgrey; font-size: 18px;">  请随便看看 &nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">登录</a> </p>
+	</div>
+</div>
+{% endblock %}
+
+{% block container %}
+<hr class="hr">
+<div class="main">
+    <div class="author">
+        <h2 align="center">注意事项</h2>
+        <br /><br />
+        一：本系统基于hadoop做离线处理，故存在时延上误差
+        <br /><br />
+
+        二：由于选取100人样本数据作为闭合社区，很大程度上偏离了csdn博客的实际情况，故数据信息仅为建模所需，并不作为真实情况对待
+        <br /><br />
+
+        三：如若部署在真实的生产环境中，还需要根据具体情况进行相应的调整，且拥有对数据源的使用权限
+        <br /><br />
+    </div>
+    <div class="blog" style="overflow:scroll;">
+        <h2 align="center">支持作者列表</h2>
+        <br /><br />
+        {% for author in author_list %}
+        <div align="center" style="line-height: 25px">{{ author }}</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

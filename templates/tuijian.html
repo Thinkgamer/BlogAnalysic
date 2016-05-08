@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link type="text/css" href="/static/css/user.css" rel="stylesheet">
+<link type="text/css" href="/static/css/base.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    关注分析
+{% endblock %}
+
+{% block head %}
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+
+<div class="head">
+    <div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+
+    <div class="h_r" id="nav">
+	   	<ul>
+			<li class="h_li"><a href="/index/user/{{ name }}" onclick="bian(0)">&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li"><a href="/blog/blog/{{ name }}" onclick="bian(1)">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block header %}
+<div class="header" id="nav">
+	<ul >
+        <li class="h_li">
+            <a class="h_a 3" onclick="bian(0)" href="/index/user/{{ name }}" >&nbsp;&nbsp;互动分析&nbsp;</a>
+        </li>
+		<li class="h_li">
+            <a class="h_a 2" onclick="bian(1)" href="/index/focus/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;关注分析&nbsp;</a>
+        </li>
+		<li class="h_li">
+            <a class="h_a 1" onclick="bian(2)" href="/index/fans/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;粉丝分析&nbsp;</a>
+        </li>
+        <li class="h_li">
+            <a class="h_a 4" onclick="bian(3)" style="border-bottom: 5px solid #000000;margin-left: 15px">&nbsp;&nbsp;用户推荐&nbsp;</a>
+        </li>&nbsp;
+    </ul>
+</div>
+<br />
+{% endblock %}
+
+{% block container %}
+<div class="contj">
+    <div class="push">
+        <div class="p_l" align="center">
+            <div><h2>猜你喜欢(Top 10)</h2></div><br />
+            {% for key,value in user_tj %}
+            <div class="p_l_1"  >
+                <a href="http://blog.csdn.net/{{ key }}" target="_blank">用户：{{ key }}</a>
+                <p >相关度：{{ value }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+		<div class="cetj" style="float: left;"></div>
+
+		<div class="p_r">
+            <div class="s_t1"><h2>推荐指数</h2></div><br /><br /><br />
+		    <div class="s_main" align="center">
+		        <canvas id="mycanvas8" class="s_canvas" height="440" width="700"></canvas>
+		    </div>
+        </div>
+
+    </div>
+</div>
+<script>
+var a=document.getElementById('mycanvas8');
+var b=a.getContext('2d');
+//y轴
+b.moveTo(30,45);
+b.lineTo(30, 440);
+b.moveTo(30,45);
+b.lineTo(38,60);
+b.moveTo(30,45);
+b.lineTo(22,60);
+b.stroke();
+//x轴S
+b.moveTo(0,410);
+b.lineTo(695,410);
+b.moveTo(695,410);
+b.lineTo(680,418);
+b.moveTo(695,410);
+b.lineTo(680,402);
+b.stroke();
+
+b.moveTo(91,410);
+b.lineTo(91,405);
+b.moveTo(152,410);
+b.lineTo(152,405);
+b.moveTo(213,410);
+b.lineTo(213,405);
+b.moveTo(274,410);
+b.lineTo(274,405);
+b.moveTo(335,410);
+b.lineTo(335,405);
+b.moveTo(396,410);
+b.lineTo(396,405);
+b.moveTo(457,410);
+b.lineTo(457,405);
+b.moveTo(518,410);
+b.lineTo(518,405);
+b.moveTo(579,410);
+b.lineTo(579,405);
+b.moveTo(630,410);
+b.lineTo(630,405);
+b.stroke();
+b.font="20px Georgia";
+b.textBaseline="top";
+
+{#横坐标的下标值#}
+b.fillText("Top1",70,413);
+b.fillText("Top2",130,413);
+b.fillText("Top3",190,413);
+b.fillText("Top4",250,413);
+b.fillText("Top5",310,413);
+b.fillText("Top6",370,413);
+b.fillText("Top7",430,413);
+b.fillText("Top8",490,413);
+b.fillText("Top9",550,413);
+b.fillText("Top10",610,413);
+
+{#var h1=207,h2=621,h3=414,h4=621,h5=207,h6=621,h7=414,h8=455,h9=45,h10=85;#}
+{#var arr1=[h1,h2,h3,h4,h5,h6,h7,h8,h9,h10];#}
+{#var arr=[h1,h2,h3,h4,h5,h6,h7,h8,h9,h10];#}
+var arr1={{ usersim_list }}
+var arr={{ usersim_list }}
+var max = {{ maxsim }}
+for(var j=0;j<arr1.length;j++){
+	arr1[j]=440- parseInt(arr1[j]/(max/365));
+}
+b.moveTo(81,410);
+b.lineTo(81,arr1[0]-30);
+b.moveTo(81,arr1[0]-30);
+b.lineTo(101,arr1[0]-30);
+b.moveTo(101,arr1[0]-30);
+b.lineTo(101,410);
+b.stroke();
+
+b.moveTo(142,410);
+b.lineTo(142,arr1[1]-30);
+b.moveTo(142,arr1[1]-30);
+b.lineTo(162,arr1[1]-30);
+b.moveTo(162,arr1[1]-30);
+b.lineTo(162,410);
+b.stroke();
+b.moveTo(203,410);
+b.lineTo(203,arr1[2]-30);
+b.moveTo(203,arr1[2]-30);
+b.lineTo(223,arr1[2]-30);
+b.moveTo(223,arr1[2]-30);
+b.lineTo(223,410);
+b.stroke();
+b.moveTo(264,410);
+b.lineTo(264,arr1[3]-30);
+b.moveTo(264,arr1[3]-30);
+b.lineTo(284,arr1[3]-30);
+b.moveTo(284,arr1[3]-30);
+b.lineTo(284,410);
+b.stroke();
+b.moveTo(325,410);
+b.lineTo(325,arr1[4]-30);
+b.moveTo(325,arr1[4]-30);
+b.lineTo(345,arr1[4]-30);
+b.moveTo(345,arr1[4]-30);
+b.lineTo(345,410);
+b.stroke();
+b.moveTo(386,410);
+b.lineTo(386,arr1[5]-30);
+b.moveTo(386,arr1[5]-30);
+b.lineTo(406,arr1[5]-30);
+b.moveTo(406,arr1[5]-30);
+b.lineTo(406,410);
+b.stroke();
+
+b.moveTo(447,410);
+b.lineTo(447,arr1[6]-30);
+b.moveTo(447,arr1[6]-30);
+b.lineTo(467,arr1[6]-30);
+b.moveTo(467,arr1[6]-30);
+b.lineTo(467,410);
+b.stroke();
+
+b.moveTo(508,410);
+b.lineTo(508,arr1[7]-30);
+b.moveTo(508,arr1[7]-30);
+b.lineTo(528,arr1[7]-30);
+b.moveTo(528,arr1[7]-30);
+b.lineTo(528,410);
+b.stroke();
+
+b.moveTo(569,410);
+b.lineTo(569,arr1[8]-30);
+b.moveTo(569,arr1[8]-30);
+b.lineTo(589,arr1[8]-30);
+b.moveTo(589,arr1[8]-30);
+b.lineTo(589,410);
+b.stroke();
+
+b.moveTo(620,410);
+b.lineTo(620,arr1[9]-30);
+b.moveTo(620,arr1[9]-30);
+b.lineTo(640,arr1[9]-30);
+b.moveTo(640,arr1[9]-30);
+b.lineTo(640,410);
+b.stroke();
+
+b.font="15px Georgia";
+b.textBaseline="Middle";
+b.strokeText(arr[0].toFixed(3),80,arr1[0]-50);
+b.strokeText(arr[1].toFixed(3),142,arr1[1]-50);
+b.strokeText(arr[2].toFixed(3),203,arr1[2]-50);
+b.strokeText(arr[3].toFixed(3),260,arr1[3]-50);
+b.strokeText(arr[4].toFixed(3),325,arr1[4]-50);
+b.strokeText(arr[5].toFixed(3),386,arr1[5]-50);
+b.strokeText(arr[6].toFixed(3),447,arr1[6]-50);
+b.strokeText(arr[7].toFixed(3),508,arr1[7]-50);
+b.strokeText(arr[8].toFixed(3),569,arr1[8]-50);
+b.strokeText(arr[9].toFixed(3),620,arr1[9]-50);
+
+</script>
+{% endblock %}
