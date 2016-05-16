@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}博客排名{% endblock %}
+{% block css %}<link type="text/css" href="/static/css/blog.css" rel="stylesheet">{% endblock %}
+{% block head %}
+<div class="head">
+	<div class="h_l">
+	    <p style="color: darkgrey; font-size: 18px;">  欢迎您，{{ name }}&nbsp;&nbsp;&nbsp;<a href="/login/login" style="text-decoration: none">注销</a> </p>
+	</div>
+    <div class="h_r" id="nav">
+    	<ul >
+			<li class="h_li1"><a class="h_li1_a" href="/index/user/{{ name }}" onclick="bian(0)" >&nbsp;用户分析&nbsp;</a></li>
+			<li class="h_li1"><a class="h_li1_a" href="/blog/blog/{{ name }}" onclick="bian(1)" style="color: red;">&nbsp;博客分析&nbsp;</a></li>
+		</ul>
+    </div>
+</div>
+<script>
+    {% if not name %}
+    alert("你还没有登录，请先登录....");
+    window.location.href="/login/login";
+    {% endif %}
+</script>
+{% endblock %}
+{% block header %}
+<div class="header" id="nav1">
+    <ul >
+	    <li class="h_li"><a class="h_a" style="" onclick="bian(0)" href="/blog/blog/{{ name }}">&nbsp;&nbsp;博客概况&nbsp;</a></li>
+		<li class="h_li"><a class="h_a" onclick="bian(0)" href="/blog/guidang/{{ name }}" style="margin-left: 15px;">&nbsp;&nbsp;归档统计&nbsp;</a></li>
+		<li class="h_li"><a class="h_a " onclick="bian(1)" href="/blog/paiming/{{ name }}" style="border-bottom: 4px solid black;margin-left: 15px;">&nbsp;&nbsp;博客排名&nbsp;</a></li>
+		<li class="h_li"><a class="h_a" onclick="bian(2)" href="/blog/btuijian/{{ name }}"  style="margin-left: 15px;">&nbsp;&nbsp;博客推荐&nbsp;</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block container %}
+<br /><br /><br />
+<div class="p_main" style="height: 700px;">
+	<div class="p_left">
+		<div class="s_t1"><h3>访问量排名(Top10)</h3></div><br />
+		<div align="center" class="p_c">
+        {% for pvnum,value in pv_dic %}
+            {% for title,id in  value.items %}
+            <div class="p_1"><a href="http://blog.csdn.net/{{ name }}/article/details/{{ id }}" target="_blank">{{ title }}</a> &nbsp;&nbsp;&nbsp;访问：{{ pvnum | floatformat }}次</div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+	</div>
+	<div class="ce" style="float: left; height: 700px;"></div>
+	<div class="p_center">
+		<div class="s_t1"><h3>评论数排名(Top10)</h3></div><br />
+    	<div align="center" class="p_c">
+        {% for id,disnum in dis_dic %}
+            {% for id1,uname in dis_idDic %}
+                {% if id1 == id  %}
+                <div class="p_1"><a href="http://blog.csdn.net/{{ name }}/article/details/{{ id }}" target="_blank">{{ uname }}</a> &nbsp;&nbsp;&nbsp;评论：{{ disnum| floatformat  }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </div>
+	</div>
+	<div class="ce" style="float: left; height: 700px;"></div>
+	<div class="p_right">
+		<div class="s_t1"><h3>最近发布/Top10</h3></div><br />
+		<div align="center" class="p_c">
+        {% for blog_time,value in time_dic %}
+            {% for title,id in value.items %}
+            <div class="p_1"><a href="http://blog.csdn.net/{{ name }}/article/details/{{ id }}" target="_blank">{{ title }}</a> |&nbsp;时间:{{ blog_time }}</div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+	</div>
+</div>
+{% endblock %}
