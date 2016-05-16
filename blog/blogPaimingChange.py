@@ -34,7 +34,7 @@ class blogPaiming():
         sql = "select blog_title,blog_id,blog_time from blog_message where user_id = "+self.id+" order by blog_time DESC LIMIT 10"
         self.cursor.execute(sql)
         for row in self.cursor.fetchall():
-            self.timeSort_dic[row[2]]={row[0]:row[1]}
+            self.timeSort_dic[row[2][:10]]={row[0]:row[1]}
         self.timeSort_dic=sorted(self.timeSort_dic.iteritems(),key = lambda dic:dic[0],reverse=True)
         return self.timeSort_dic
 
