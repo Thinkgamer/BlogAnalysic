@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^index/', include('index.urls')),
     url(r'^see/', include('see.urls')),
     url(r'^blog/', include('blog.urls')),
-    url(r'^', "blog_analysic.views.change")
+    #url(r'^', "blog_analysic.views.change")
 ]
