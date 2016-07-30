@@ -1,9 +1,9 @@
-#coding:utf-8
+#-*-coding:utf-8-*-
 import MySQLdb
 
 #数据库连接
 def connect():
-    db = MySQLdb.connect("127.0.0.1","root","root","blog_analysic_system")
+    db = MySQLdb.connect("127.0.0.1","root","root","blog_analysic_system",charset='gbk')
     cursor = db.cursor()
     return db,cursor
 
@@ -50,4 +50,4 @@ def getHotBlog():
 
     return sorted(blog_dic.iteritems(),key = lambda dic:dic[0],reverse=True)
 
-    return blog_list
+    # return blog_list

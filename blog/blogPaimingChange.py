@@ -5,7 +5,7 @@ import MySQLdb
 class blogPaiming():
     def __init__(self,name_id):
         self.id = name_id
-        self.db = MySQLdb.connect("127.0.0.1","root","root","blog_analysic_system")
+        self.db = MySQLdb.connect("127.0.0.1","root","root","blog_analysic_system",charset='gbk')
         self.cursor = self.db.cursor()
         self.pvSort_dic = {}
         self.disSort_dic = {}
