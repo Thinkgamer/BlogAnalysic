@@ -1,5 +1,6 @@
 # BlogAnalysic
-博客统计分析系统 依托于CSDN数据，使用hadoop做离线分析处理，使用django+前端进行数据展示
+博客统计分析系统 依托于CSDN数据，使用hadoop做离线分析处理，使用django+前端进行数据展示<br>
+该项目在16年的全国计算机作品大赛中获取三等奖，在辽宁省计算机作品大赛中获取二等奖
 
 数据比较混乱，暂时不公布了，有需要的亲们联系email：thinkgamer_gyt@gmail.com
 <br><br>
